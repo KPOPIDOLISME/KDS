@@ -1,189 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-POP'S DREAM STAGE (KDS)</title>
+Owner avatar
+KDS
+Public
+KPOPIDOLISME/KDS
+Go to file
+t
+T
+Name		
+KPOPIDOLISME
+KPOPIDOLISME
+Enhance styling and implement coach selection
+90c4686
+ · 
+1 hour ago
+4516a2e1-208e-4e4f-879e-33d6b2a80987.jpg
+Add files via upload
+2 hours ago
+README.md
+Initial commit
+3 hours ago
+index.html
+Enhance styling and implement coach selection
+1 hour ago
+Repository files navigation
+README
+KDS
+K-POP'S DREAM STAGE (KDS) - AI-powered training platform for aspiring K-pop idols.
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, Helvetica, sans-serif;
-    }
+About
+K-POP'S DREAM STAGE (KDS) - AI-powered training platform for aspiring K-pop idols.
 
-    body{
-      background-image: linear-gradient(
-        rgba(0,0,0,0.45),
-        rgba(20,0,40,0.65)
-      ),
-      url("kds-background.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color:white;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-      overflow: hidden;
-    }
+Resources
+ Readme
+ Activity
+Stars
+ 0 stars
+Watchers
+ 0 watching
+Forks
+ 0 forks
+Releases
+No releases published
+Create a new release
+Deployments
+1
+ github-pages 30 minutes ago
+Packages
+No packages published
+Publish your first package
+Contributors
+1
+@KPOPIDOLISME
+KPOPIDOLISME
+Languages
+HTML
+100.0%
+Footer
+© 2026 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Community
+Docs
 
-    /* Screen management */
-    .screen {
-      display: none;
-      text-align:center;
-      background:rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      padding:40px;
-      border-radius:20px;
-      width:90%;
-      max-width:450px;
-      box-shadow:0 0 30px rgba(180,0,255,0.4);
-    }
-
-    .active {
-      display: block;
-    }
-
-    h1{
-      font-size:32px;
-      margin-bottom:10px;
-    }
-
-    h2{
-      color:#d28cff;
-      margin-bottom:20px;
-    }
-
-    p{
-      color:#dddddd;
-      margin-bottom:30px;
-      line-height:1.5;
-    }
-
-    button{
-      width:100%;
-      padding:15px;
-      margin:10px 0;
-      border:none;
-      border-radius:12px;
-      background:#a100ff;
-      color:white;
-      font-size:18px;
-      cursor:pointer;
-      transition:.3s;
-    }
-
-    button:hover{
-      background:#c13cff;
-    }
-
-    .coach-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .coach-card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 15px;
-      border-radius: 12px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: 0.3s;
-    }
-
-    .coach-card:hover {
-      border-color: #a100ff;
-      background: rgba(161, 0, 255, 0.2);
-    }
-
-    .coach-icon {
-      font-size: 24px;
-      margin-bottom: 5px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      font-size: 16px;
-    }
-
-    .footer{
-      margin-top:25px;
-      font-size:13px;
-      color:#bdbdbd;
-    }
-  </style>
-</head>
-<body>
-
-<!-- SCREEN 1: WELCOME SCREEN -->
-<div id="welcome-screen" class="screen active">
-  <h1>🎤 KDS</h1>
-  <h2>K-POP'S DREAM STAGE</h2>
-  <p>
-    Train your vocals, dance, rap, stage presence and Korean with your
-    own personalized AI Idol Coach.
-  </p>
-  <button onclick="showScreen('coach-screen')">🚀 Get Started</button>
-  <button onclick="showScreen('login-screen')">🔑 Login</button>
-  <div class="footer">© 2026 KDS • Dream. Practice. Shine.</div>
-</div>
-
-<!-- SCREEN 2: LOGIN SCREEN -->
-<div id="login-screen" class="screen">
-  <h1>🔑 Welcome Back</h1>
-  <h2>Enter your Trainee details</h2>
-  <input type="text" placeholder="Username / Email">
-  <input type="password" placeholder="Password">
-  <button onclick="showScreen('welcome-screen')">Success Login</button>
-  <button onclick="showScreen('welcome-screen')" style="background: gray;">🔙 Back</button>
-</div>
-
-<!-- SCREEN 3: COACH SELECTION SCREEN -->
-<div id="coach-screen" class="screen">
-  <h1>✨ Choose Your AI Coach</h1>
-  <h2>Who will train you today?</h2>
-  <div class="coach-grid">
-    <div class="coach-card" onclick="alert('Vocal training unlocked soon!')">
-      <div class="coach-icon">🎵</div>
-      <h3>Vocal Coach</h3>
-    </div>
-    <div class="coach-card" onclick="alert('Dance training unlocked soon!')">
-      <div class="coach-icon">💃</div>
-      <h3>Dance Coach</h3>
-    </div>
-    <div class="coach-card" onclick="alert('Rap training unlocked soon!')">
-      <div class="coach-icon">🎤</div>
-      <h3>Rap Coach</h3>
-    </div>
-    <div class="coach-card" onclick="alert('Language training unlocked soon!')">
-      <div class="coach-icon">🇰🇷</div>
-      <h3>Korean Tutor</h3>
-    </div>
-  </div>
-  <button onclick="showScreen('welcome-screen')" style="background: gray; margin-top: 20px;">🔙 Back to Menu</button>
-</div>
-
-<script>
-  function showScreen(screenId) {
-    // Hide all screens
-    document.querySelectorAll('.screen').forEach(screen => {
-      screen.classList.remove('active');
-    });
-    // Show the requested screen
-    document.getElementById(screenId).classList.add('active');
-  }
-</script>
-
-</body>
-</html>
+Contact
+Manage cookies
