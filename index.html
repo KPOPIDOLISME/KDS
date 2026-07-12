@@ -14,7 +14,6 @@
     }
 
     body{
-      /* Clean, background-free gradient theme */
       background: linear-gradient(135deg, #0d0d0d, #2b0b45);
       color:white;
       display:flex;
@@ -76,6 +75,22 @@
       background:#c13cff;
     }
 
+    select, input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 16px;
+    }
+
+    select option {
+      background: #2b0b45;
+      color: white;
+    }
+
     .coach-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -100,17 +115,6 @@
     .coach-icon {
       font-size: 24px;
       margin-bottom: 5px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      font-size: 16px;
     }
 
     /* Training Studio Layout */
@@ -142,6 +146,46 @@
       min-height: 20px;
     }
 
+    /* Trainee ID Badge Styling */
+    .id-badge {
+      background: linear-gradient(145deg, #1f0833, #0d0d0d);
+      border: 2px dashed #a100ff;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: left;
+      margin-top: 20px;
+      box-shadow: 0 0 15px rgba(161, 0, 255, 0.2);
+    }
+    .id-line {
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .id-label {
+      color: #d28cff;
+      font-weight: bold;
+    }
+
+    /* Progress Stats Layout */
+    .stats-container {
+      margin: 15px 0;
+      text-align: left;
+    }
+    .stat-bar-bg {
+      background: rgba(255,255,255,0.1);
+      width: 100%;
+      height: 12px;
+      border-radius: 6px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .stat-bar-fill {
+      background: linear-gradient(90deg, #a100ff, #00f5d4);
+      height: 100%;
+      width: 10%;
+      transition: width 0.5s ease;
+    }
+
     .footer{
       margin-top:25px;
       font-size:13px;
@@ -159,7 +203,7 @@
     Train your vocals, dance, rap, stage presence and Korean with your
     own personalized AI Idol Coach.
   </p>
-  <button onclick="showScreen('coach-screen')">🚀 Get Started</button>
+  <button onclick="showScreen('profile-screen')">🚀 Get Started</button>
   <button onclick="showScreen('login-screen')">🔑 Login</button>
   <div class="footer">© 2026 KDS • Dream. Practice. Shine.</div>
 </div>
@@ -170,7 +214,45 @@
   <h2>Enter your Trainee details</h2>
   <input type="text" placeholder="Username / Email">
   <input type="password" placeholder="Password">
-  <button onclick="showScreen('welcome-screen')">Success Login</button>
+  <button onclick="showScreen('coach-screen')">Success Login</button>
+  <button onclick="showScreen('welcome-screen')" style="background: gray;">🔙 Back</button>
+</div>
+
+<!-- SCREEN 2.5: TRAINEE PROFILE CREATOR -->
+<div id="profile-screen" class="screen">
+  <h1>📋 Trainee Audition</h1>
+  <h2>Create Your K-pop ID</h2>
+  
+  <input type="text" id="trainee-name" placeholder="Enter Stage Name" value="IdolTrainee">
+  
+  <select id="trainee-agency">
+    <option value="HYBE Labels">Agency: HYBE</option>
+    <option value="YG Entertainment">Agency: YG</option>
+    <option value="SM Entertainment">Agency: SM</option>
+    <option value="JYP Entertainment">Agency: JYP</option>
+    <option value="ADOR (NewJeans)">Agency: ADOR</option>
+    <option value="KQ Entertainment">Agency: KQ</option>
+    <option value="KDS Independent">Agency: Independent</option>
+  </select>
+
+  <select id="trainee-position">
+    <option value="Main Vocalist">Position: Main Vocal</option>
+    <option value="Main Dancer">Position: Main Dancer</option>
+    <option value="Main Rapper">Position: Main Rapper</option>
+    <option value="Visual / Center">Position: Visual & Center</option>
+  </select>
+
+  <button onclick="generateIDBadge()">✨ Generate Trainee Card</button>
+
+  <div id="badge-display" class="id-badge" style="display:none;">
+    <h3 style="text-align:center; color:#00f5d4; margin-bottom:10px;">OFFICIAL TRAINEE PASS</h3>
+    <div class="id-line"><span class="id-label">Name:</span> <span id="lbl-name"></span></div>
+    <div class="id-line"><span class="id-label">Agency:</span> <span id="lbl-agency"></span></div>
+    <div class="id-line"><span class="id-label">Role:</span> <span id="lbl-pos"></span></div>
+    <div class="id-line"><span class="id-label">Status:</span> 🟢 Active Training</div>
+  </div>
+
+  <button id="proceed-btn" onclick="showScreen('coach-screen')" style="display:none; background:#00b4d8;">Go to Training Center ➡️</button>
   <button onclick="showScreen('welcome-screen')" style="background: gray;">🔙 Back</button>
 </div>
 
@@ -196,7 +278,8 @@
       <h3>Korean Tutor</h3>
     </div>
   </div>
-  <button onclick="showScreen('welcome-screen')" style="background: gray; margin-top: 20px;">🔙 Back to Menu</button>
+  <button onclick="showScreen('stats-screen')" style="background: #00b4d8; margin-top: 15px;">📊 View My Progress & Stats</button>
+  <button onclick="showScreen('welcome-screen')" style="background: gray;">🔙 Back to Menu</button>
 </div>
 
 <!-- SCREEN 4: VOCAL STUDIO -->
@@ -255,63 +338,3 @@
   <h1>🇰🇷 Korean Room</h1>
   <h2>AI Coach Felix</h2>
   <div class="studio-box">
-    <h4>🗣️ Phrase of the Day:</h4>
-    <p style="margin:0; font-size:16px; font-weight:bold; color:#fff;">데뷔하자! (De-bwi-ha-ja!)</p>
-    <p style="margin:0; font-size:13px; color:#bdbdbd;">Meaning: Let's debut!</p>
-  </div>
-  <div class="studio-box">
-    <h4>🧠 Pronunciation Tip:</h4>
-    <p style="margin:0; font-size:14px; color:#e0aaff;">Keep your vowels flat and smooth without rolling consonants.</p>
-  </div>
-  <button class="eval-btn" onclick="getFeedback('korean')">🗣️ Check Pronunciation</button>
-  <div id="korean-feedback" class="feedback-text"></div>
-  <button onclick="showScreen('coach-screen')" style="background: gray; margin-top: 15px;">🔙 Switch Coach</button>
-</div>
-
-<script>
-  function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(screen => {
-      screen.classList.remove('active');
-    });
-    document.querySelectorAll('.feedback-text').forEach(text => {
-      text.innerText = "";
-    });
-    document.getElementById(screenId).classList.add('active');
-  }
-
-  function getFeedback(type) {
-    const database = {
-      vocal: [
-        "✨ Jihyo approves! Brilliant pitch stability on your high notes.",
-        "🔥 Incredible power, but remember Jihyo's rule: watch your breath control!",
-        "🎤 Good tone match! Practice widening your vocal range for the chorus.",
-        "🌟 Your stability is perfect! Total main vocalist material."
-      ],
-      dance: [
-        "⚡ Lisa says: Sharp execution! Your arm lines matched the angles perfectly.",
-        "🩰 Clean lines, but Lisa wants to see more power in your footwork!",
-        "🔥 Phenomenal performance texture! Center-stage synchronization complete.",
-        "⚠️ Alignment tip from Lisa: Keep your shoulders dropped during the spin."
-      ],
-      rap: [
-        "🗣️ Suga approves! Your articulation is crisp and cuts through the beat.",
-        "💣 Fast flow! Suga suggests switching pockets smoothly between bars.",
-        "🔥 Perfect breath pacing. You kept the rhythm exactly on time like a pro.",
-        "🎤 Great projection! Try changing your vocal tone for more swagger."
-      ],
-      korean: [
-        "🇦🇺 Felix loves your confidence! 5-star native accent match.",
-        "🗣️ Felix says: Good attempt! Soften the 'd' sound slightly.",
-        "✨ Fluent delivery! Your intonation sounds incredible in Felix's deep tone.",
-        "👍 95% Accuracy! Felix gives you an elite pass mark today."
-      ]
-    };
-
-    const options = database[type];
-    const randomResult = options[Math.floor(Math.random() * options.length)];
-    document.getElementById(`${type}-feedback`).innerText = randomResult;
-  }
-</script>
-
-</body>
-</html>
