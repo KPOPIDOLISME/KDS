@@ -1,68 +1,317 @@
-Owner avatar
-KDS
-Public
-KPOPIDOLISME/KDS
-Go to file
-t
-T
-Name		
-KPOPIDOLISME
-KPOPIDOLISME
-Enhance styling and implement coach selection
-90c4686
- · 
-1 hour ago
-4516a2e1-208e-4e4f-879e-33d6b2a80987.jpg
-Add files via upload
-2 hours ago
-README.md
-Initial commit
-3 hours ago
-index.html
-Enhance styling and implement coach selection
-1 hour ago
-Repository files navigation
-README
-KDS
-K-POP'S DREAM STAGE (KDS) - AI-powered training platform for aspiring K-pop idols.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-POP'S DREAM STAGE (KDS)</title>
 
-About
-K-POP'S DREAM STAGE (KDS) - AI-powered training platform for aspiring K-pop idols.
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
 
-Resources
- Readme
- Activity
-Stars
- 0 stars
-Watchers
- 0 watching
-Forks
- 0 forks
-Releases
-No releases published
-Create a new release
-Deployments
-1
- github-pages 30 minutes ago
-Packages
-No packages published
-Publish your first package
-Contributors
-1
-@KPOPIDOLISME
-KPOPIDOLISME
-Languages
-HTML
-100.0%
-Footer
-© 2026 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Community
-Docs
+    body{
+      /* Clean, background-free gradient theme */
+      background: linear-gradient(135deg, #0d0d0d, #2b0b45);
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      overflow: hidden;
+    }
 
-Contact
-Manage cookies
+    /* Screen management layout */
+    .screen {
+      display: none;
+      text-align:center;
+      background:rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding:40px;
+      border-radius:20px;
+      width:90%;
+      max-width:450px;
+      box-shadow:0 0 30px rgba(180,0,255,0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .active {
+      display: block;
+    }
+
+    h1{
+      font-size:32px;
+      margin-bottom:10px;
+    }
+
+    h2{
+      color:#d28cff;
+      margin-bottom:20px;
+    }
+
+    p{
+      color:#dddddd;
+      margin-bottom:30px;
+      line-height:1.5;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      margin:10px 0;
+      border:none;
+      border-radius:12px;
+      background:#a100ff;
+      color:white;
+      font-size:18px;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    button:hover{
+      background:#c13cff;
+    }
+
+    .coach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .coach-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.3s;
+    }
+
+    .coach-card:hover {
+      border-color: #a100ff;
+      background: rgba(161, 0, 255, 0.2);
+    }
+
+    .coach-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 16px;
+    }
+
+    /* Training Studio Layout */
+    .studio-box {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      border-left: 4px solid #a100ff;
+      text-align: left;
+    }
+
+    .studio-box h4 {
+      color: #d28cff;
+      margin-bottom: 5px;
+    }
+
+    .eval-btn {
+      background: #00b4d8;
+    }
+    .eval-btn:hover {
+      background: #0096c7;
+    }
+
+    .feedback-text {
+      margin-top:15px; 
+      font-weight:bold; 
+      color:#00f5d4;
+      min-height: 20px;
+    }
+
+    .footer{
+      margin-top:25px;
+      font-size:13px;
+      color:#bdbdbd;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCREEN 1: WELCOME SCREEN -->
+<div id="welcome-screen" class="screen active">
+  <h1>🎤 KDS</h1>
+  <h2>K-POP'S DREAM STAGE</h2>
+  <p>
+    Train your vocals, dance, rap, stage presence and Korean with your
+    own personalized AI Idol Coach.
+  </p>
+  <button onclick="showScreen('coach-screen')">🚀 Get Started</button>
+  <button onclick="showScreen('login-screen')">🔑 Login</button>
+  <div class="footer">© 2026 KDS • Dream. Practice. Shine.</div>
+</div>
+
+<!-- SCREEN 2: LOGIN SCREEN -->
+<div id="login-screen" class="screen">
+  <h1>🔑 Welcome Back</h1>
+  <h2>Enter your Trainee details</h2>
+  <input type="text" placeholder="Username / Email">
+  <input type="password" placeholder="Password">
+  <button onclick="showScreen('welcome-screen')">Success Login</button>
+  <button onclick="showScreen('welcome-screen')" style="background: gray;">🔙 Back</button>
+</div>
+
+<!-- SCREEN 3: COACH SELECTION SCREEN -->
+<div id="coach-screen" class="screen">
+  <h1>✨ Choose Your AI Coach</h1>
+  <h2>Who will train you today?</h2>
+  <div class="coach-grid">
+    <div class="coach-card" onclick="showScreen('vocal-screen')">
+      <div class="coach-icon">🎵</div>
+      <h3>Vocal Coach</h3>
+    </div>
+    <div class="coach-card" onclick="showScreen('dance-screen')">
+      <div class="coach-icon">💃</div>
+      <h3>Dance Coach</h3>
+    </div>
+    <div class="coach-card" onclick="showScreen('rap-screen')">
+      <div class="coach-icon">🎤</div>
+      <h3>Rap Coach</h3>
+    </div>
+    <div class="coach-card" onclick="showScreen('korean-screen')">
+      <div class="coach-icon">🇰🇷</div>
+      <h3>Korean Tutor</h3>
+    </div>
+  </div>
+  <button onclick="showScreen('welcome-screen')" style="background: gray; margin-top: 20px;">🔙 Back to Menu</button>
+</div>
+
+<!-- SCREEN 4: VOCAL STUDIO -->
+<div id="vocal-screen" class="screen">
+  <h1>🎵 Vocal Studio</h1>
+  <h2>AI Coach Jihyo</h2>
+  <div class="studio-box">
+    <h4>🎼 Vocal Routine:</h4>
+    <p style="margin:0; font-size:14px; color:#fff;">Practice pitch intervals: "Do-Re-Mi-Fa-Sol-Fa-Mi-Re-Do"</p>
+  </div>
+  <div class="studio-box">
+    <h4>🎙️ Lyric Challenge:</h4>
+    <p style="margin:0; font-size:15px; font-style:italic; color:#e0aaff;">"Shine on me like a starlight..."</p>
+  </div>
+  <button class="eval-btn" onclick="getFeedback('vocal')">🎤 Listen & Evaluate</button>
+  <div id="vocal-feedback" class="feedback-text"></div>
+  <button onclick="showScreen('coach-screen')" style="background: gray; margin-top: 15px;">🔙 Switch Coach</button>
+</div>
+
+<!-- SCREEN 5: DANCE STUDIO -->
+<div id="dance-screen" class="screen">
+  <h1>💃 Dance Studio</h1>
+  <h2>AI Coach Lisa</h2>
+  <div class="studio-box">
+    <h4>🔥 Routine Checklist:</h4>
+    <p style="margin:0; font-size:14px; color:#fff;">Focus on core isolation and sharp arm angles during the chorus drop.</p>
+  </div>
+  <div class="studio-box">
+    <h4>📸 Motion Capture:</h4>
+    <p style="margin:0; font-size:14px; color:#e0aaff;">[Camera System Active - Match the flow]</p>
+  </div>
+  <button class="eval-btn" onclick="getFeedback('dance')">⚡ Scan My Moves</button>
+  <div id="dance-feedback" class="feedback-text"></div>
+  <button onclick="showScreen('coach-screen')" style="background: gray; margin-top: 15px;">🔙 Switch Coach</button>
+</div>
+
+<!-- SCREEN 6: RAP STUDIO -->
+<div id="rap-screen" class="screen">
+  <h1>🎤 Rap Studio</h1>
+  <h2>AI Coach Suga</h2>
+  <div class="studio-box">
+    <h4>⏱️ Flow Target:</h4>
+    <p style="margin:0; font-size:14px; color:#fff;">Deliver 8 syllables per second with clean pronunciation.</p>
+  </div>
+  <div class="studio-box">
+    <h4>📝 Fast-Verse Drill:</h4>
+    <p style="margin:0; font-size:15px; font-style:italic; color:#e0aaff;">"Bada-bing, bada-boom, clear the room..."</p>
+  </div>
+  <button class="eval-btn" onclick="getFeedback('rap')">🔥 Analyze My Flow</button>
+  <div id="rap-feedback" class="feedback-text"></div>
+  <button onclick="showScreen('coach-screen')" style="background: gray; margin-top: 15px;">🔙 Switch Coach</button>
+</div>
+
+<!-- SCREEN 7: KOREAN CLASSROOM -->
+<div id="korean-screen" class="screen">
+  <h1>🇰🇷 Korean Room</h1>
+  <h2>AI Coach Felix</h2>
+  <div class="studio-box">
+    <h4>🗣️ Phrase of the Day:</h4>
+    <p style="margin:0; font-size:16px; font-weight:bold; color:#fff;">데뷔하자! (De-bwi-ha-ja!)</p>
+    <p style="margin:0; font-size:13px; color:#bdbdbd;">Meaning: Let's debut!</p>
+  </div>
+  <div class="studio-box">
+    <h4>🧠 Pronunciation Tip:</h4>
+    <p style="margin:0; font-size:14px; color:#e0aaff;">Keep your vowels flat and smooth without rolling consonants.</p>
+  </div>
+  <button class="eval-btn" onclick="getFeedback('korean')">🗣️ Check Pronunciation</button>
+  <div id="korean-feedback" class="feedback-text"></div>
+  <button onclick="showScreen('coach-screen')" style="background: gray; margin-top: 15px;">🔙 Switch Coach</button>
+</div>
+
+<script>
+  function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(screen => {
+      screen.classList.remove('active');
+    });
+    document.querySelectorAll('.feedback-text').forEach(text => {
+      text.innerText = "";
+    });
+    document.getElementById(screenId).classList.add('active');
+  }
+
+  function getFeedback(type) {
+    const database = {
+      vocal: [
+        "✨ Jihyo approves! Brilliant pitch stability on your high notes.",
+        "🔥 Incredible power, but remember Jihyo's rule: watch your breath control!",
+        "🎤 Good tone match! Practice widening your vocal range for the chorus.",
+        "🌟 Your stability is perfect! Total main vocalist material."
+      ],
+      dance: [
+        "⚡ Lisa says: Sharp execution! Your arm lines matched the angles perfectly.",
+        "🩰 Clean lines, but Lisa wants to see more power in your footwork!",
+        "🔥 Phenomenal performance texture! Center-stage synchronization complete.",
+        "⚠️ Alignment tip from Lisa: Keep your shoulders dropped during the spin."
+      ],
+      rap: [
+        "🗣️ Suga approves! Your articulation is crisp and cuts through the beat.",
+        "💣 Fast flow! Suga suggests switching pockets smoothly between bars.",
+        "🔥 Perfect breath pacing. You kept the rhythm exactly on time like a pro.",
+        "🎤 Great projection! Try changing your vocal tone for more swagger."
+      ],
+      korean: [
+        "🇦🇺 Felix loves your confidence! 5-star native accent match.",
+        "🗣️ Felix says: Good attempt! Soften the 'd' sound slightly.",
+        "✨ Fluent delivery! Your intonation sounds incredible in Felix's deep tone.",
+        "👍 95% Accuracy! Felix gives you an elite pass mark today."
+      ]
+    };
+
+    const options = database[type];
+    const randomResult = options[Math.floor(Math.random() * options.length)];
+    document.getElementById(`${type}-feedback`).innerText = randomResult;
+  }
+</script>
+
+</body>
+</html>
