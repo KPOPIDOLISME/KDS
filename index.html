@@ -1,678 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-POP'S DREAM STAGE (KDS)</title>
+    <style>
+        /* ============================================================================
+           KDS DESIGN THEME (ALL YOUR BEAUTIFUL STYLES)
+           ============================================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        body {
+            background: linear-gradient(rgba(0,0,0,.45),rgba(20,0,40,.65)),
+                        url("kds-background.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+        }
 
-<title>K-POP'S DREAM STAGE (KDS)</title>
+        .screen {
+            display: none;
+            width: 90%;
+            max-width: 500px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 0 25px rgba(161, 0, 255, .4);
+        }
 
-<link rel="stylesheet" href="style.css">
+        .screen.active {
+            display: block;
+        }
 
+        h1 {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #d28cff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            color: #ddd;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .15);
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* Keeps dropdown options matching your dark purple theme */
+        option {
+            background: #1e003a;
+            color: white;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 12px;
+            background: #9d00ff;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            transition: .3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+            background: #c43dff;
+        }
+
+        .secondary {
+            background: #555;
+        }
+
+        .secondary:hover {
+            background: #777;
+        }
+
+        .coach-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .coach-card {
+            background: rgba(255, 255, 255, .08);
+            border-radius: 15px;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: .3s;
+            font-size: 24px;
+        }
+
+        .coach-card h3 {
+            font-size: 16px;
+            margin-top: 8px;
+            color: white;
+        }
+
+        .coach-card:hover {
+            transform: translateY(-5px);
+            border: 1px solid #d28cff;
+            background: rgba(255, 255, 255, .15);
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        /* Glowing interactive AI assessment block */
+        .session-monitor {
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(0, 0, 0, .55);
+            border-radius: 10px;
+            font-weight: bold;
+            font-family: monospace;
+            text-align: center;
+            border: 1px solid rgba(161, 0, 255, .4);
+        }
+
+        @media(max-width:600px){
+            .screen { width: 95%; padding: 25px; }
+            h1 { font-size: 28px; }
+            .coach-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- HOME SCREEN -->
+    <!-- HOME SCREEN -->
+    <div id="home" class="screen active">
+        <h1>🎤 KDS</h1>
+        <h2>K-POP'S DREAM STAGE</h2>
+        <p>Become the best version of yourself with your own AI Idol Coach.</p>
+        <button onclick="showScreen('login')">🚀 Get Started</button>
+        <button class="secondary" onclick="showScreen('login')">🔑 Login</button>
+        <div class="footer">Dream • Practice • Shine</div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div id="login" class="screen">
+        <h1>🔑 Login</h1>
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button onclick="showScreen('signup')">Create Account</button>
+        <button class="secondary" onclick="saveProfileAndContinue()">Login</button>
+        <button class="secondary" onclick="showScreen('home')">⬅ Back</button>
+    </div>
+
+    <!-- SIGN UP SCREEN -->
+    <div id="signup" class="screen">
+        <h1>📝 Create Account</h1>
+        <input type="text" placeholder="Full Name">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <input type="password" placeholder="Confirm Password">
+        <button onclick="showScreen('profile')">Create My Trainee Account</button>
+        <button class="secondary" onclick="showScreen('login')">⬅ Back</button>
+    </div>
+
+    <!-- PROFILE PANEL SCREEN -->
+    <div id="profile" class="screen">
+        <h1>👤 Trainee Profile</h1>
+        <input type="text" id="stageNameInput" placeholder="Stage Name">
+        <input type="number" id="ageInput" placeholder="Age">
+        
+        <select>
+            <option>Girl</option>
+            <option>Boy</option>
+            <option>Prefer not to say</option>
+        </select>
+
+        <select>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+            <option>Elite</option>
+        </select>
+
+        <select id="agencySelect">
+            <option>YG (BabyMonster Label!)</option>
+            <option>HYBE</option>
+            <option>JYP</option>
+            <option>SM</option>
+            <option>Starship</option>
+            <option>Cube</option>
+            <option>Other</option>
+        </select>
+
+        <select>
+            <option>5–10 Minutes</option>
+            <option>10–20 Minutes</option>
+            <option>30 Minutes</option>
+            <option>1 Hour</option>
+            <option>2 Hours</option>
+        </select>
+
+        <textarea placeholder="Health issues, injuries or activities to avoid (optional)"></textarea>
+        <button onclick="saveProfileAndContinue()">Continue to Dashboard</button>
+    </div>
+
+    <!-- MAIN IDOL DASHBOARD SCREEN -->
+    <div id="dashboard" class="screen">
+        <h1>🏠 Dashboard</h1>
+        <p id="welcomeUserText">Welcome Trainee!</p>
+        
+        <div class="coach-grid">
+            <div class="coach-card" onclick="showScreen('vocal')">🎵<h3>Vocal</h3></div>
+            <div class="coach-card" onclick="showScreen('dance')">💃<h3>Dance</h3></div>
+            <div class="coach-card" onclick="showScreen('rap')">🎤<h3>Rap</h3></div>
+            <div class="coach-card" onclick="showScreen('korean')">🇰🇷<h3>Korean</h3></div>
+        </div>
+        <br>
+        <button onclick="showScreen('about')">💜 About KDS</button>
+        <button onclick="showScreen('feedback')">⭐ Feedback</button>
+        <button class="secondary" onclick="showScreen('home')">🚪 Logout</button>
+    </div>
+      
+    <!-- INDIVIDUAL TRAINING SCREENS -->
+    <div id="vocal" class="screen">
+        <h1>🎵 Vocal Studio</h1>
+        <h2>AI Vocal Coach</h2>
+        <p>🎤 15 Minutes Breathing<br>🎵 20 Minutes Singing<br>🎧 Pitch Practice</p>
+        <button onclick="triggerStudioSession('vocal')">🎙 Run Vocal Assessment</button>
+        <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
+    </div>
+
+    <div id="dance" class="screen">
+        <h1>💃 Dance Studio</h1>
+        <h2>AI Dance Coach</h2>
+        <p>🕺 Warm Up<br>💃 Learn Choreography<br>🔥 Freestyle Practice</p>
+        <button onclick="triggerStudioSession('dance')">👟 Active Motion Check</button>
+        <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
+    </div>
+
+    <div id="rap" class="screen">
+        <h1>🎤 Rap Studio</h1>
+        <h2>AI Rap Coach</h2>
+        <p>🎙 Pronunciation<br>⚡ Speed Practice<br>🎵 Rhythm Training</p>
+        <button onclick="triggerStudioSession('rap')">⚡ Measure Flow Cadence</button>
+        <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
+    </div>
+
+    <div id="korean" class="screen">
+        <h1>🇰🇷 Korean Studio</h1>
+        <h2>AI Korean Coach</h2>
+        <p>안녕하세요 (Hello)<br>감사합니다 (Thank You)<br><br>Practice Reading & Speaking</p>
+        <button onclick="triggerStudioSession('korean')">🗣 Evaluate Accent Track</button>
+        <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
+    </div>
+
+    <!-- PLATFORM SUPPORT SCREENS -->
+    <div id="about" class="screen">
+        <h1>💜 About KDS</h1>
+        <p>K-POP'S DREAM STAGE (KDS) is an AI-powered platform created to help aspiring K-pop trainees improve their skills through personalized schedules.</p>
+        <button onclick="showScreen('dashboard')">⬅ Dashboard</button>
+    </div>
+
+    <div id="feedback" class="screen">
+        <h1>⭐ Feedback</h1>
+        <select id="ratingSelect">
+            <option>⭐⭐⭐⭐⭐ Excellent</option>
+            <option>⭐⭐⭐⭐ Good</option>
+        </select>
 
-<div id="home" class="screen active">
-
-<h1>🎤 KDS</h1>
-
-<h2>K-POP'S DREAM STAGE</h2>
-
-<p>
-Become the best version of yourself with your own AI Idol Coach.
-</p>
-
-<button onclick="showScreen('login')">
-🚀 Get Started
-</button>
-
-<button onclick="showScreen('login')">
-🔑 Login
-</button>
-
-<div class="footer">
-Dream • Practice • Shine
-</div>
-
-</div>
-
-<!-- LOGIN -->
-
-<div id="login" class="screen">
-
-<h1>🔑 Login</h1>
-
-<input
-type="email"
-placeholder="Email">
-
-<input
-type="password"
-placeholder="Password">
-
-<button onclick="showScreen('signup')">
-Create Account
-</button>
-
-<button onclick="showScreen('profile')">
-Login
-</button>
-
-<button class="secondary"
-onclick="showScreen('home')">
-⬅ Back
-</button>
-
-</div>
-
-<!-- SIGN UP -->
-
-<div id="signup" class="screen">
-
-<h1>📝 Create Account</h1>
-
-<input
-type="text"
-placeholder="Full Name">
-
-<input
-type="email"
-placeholder="Email">
-
-<input
-type="password"
-placeholder="Password">
-
-<input
-type="password"
-placeholder="Confirm Password">
-
-<button onclick="showScreen('profile')">
-Create My Trainee Account
-</button>
-
-<button class="secondary"
-onclick="showScreen('login')">
-⬅ Back
-</button>
-
-</div>
-
-<!-- PROFILE -->
-
-<div id="profile" class="screen">
-
-<h1>👤 Trainee Profile</h1>
-
-<input
-type="text"
-placeholder="Stage Name">
-
-<input
-type="number"
-placeholder="Age">
-
-<select>
-
-<option>Girl</option>
-
-<option>Boy</option>
-
-<option>Prefer not to say</option>
-
-</select>
-
-<select>
-
-<option>Beginner</option>
-
-<option>Intermediate</option>
-
-<option>Advanced</option>
-
-<option>Elite</option>
-
-</select>
-
-<select>
-
-<option>HYBE</option>
-
-<option>JYP</option>
-
-<option>SM</option>
-
-<option>YG</option>
-
-<option>Starship</option>
-
-<option>Cube</option>
-
-<option>WakeOne</option>
-
-<option>Other</option>
-
-</select>
-
-<select>
-
-<option>5–10 Minutes</option>
-
-<option>10–20 Minutes</option>
-
-<option>30 Minutes</option>
-
-<option>1 Hour</option>
-
-<option>2 Hours</option>
-
-</select>
-
-<textarea
-placeholder="Health issues, injuries or activities to avoid (optional)">
-</textarea>
-
-<button onclick="showScreen('dashboard')">
-Continue
-</button>
-
-</div>
-
-<!-- DASHBOARD -->
-
-<div id="dashboard" class="screen">
-
-<h1>🏠 Dashboard</h1>
-
-<p>
-
-Welcome Trainee!
-
-</p>
-
-<div class="coach-grid">
-
-<div class="coach-card"
-onclick="showScreen('vocal')">
-
-🎵
-
-<h3>Vocal</h3>
-
-</div>
-
-<div class="coach-card"
-onclick="showScreen('dance')">
-
-💃
-
-<h3>Dance</h3>
-
-</div>
-
-<div class="coach-card"
-onclick="showScreen('rap')">
-
-🎤
-
-<h3>Rap</h3>
-
-</div>
-
-<div class="coach-card"
-onclick="showScreen('korean')">
-
-🇰🇷
-
-<h3>Korean</h3>
-
-</div>
-
-</div>
-
-<br>
-
-<button onclick="showScreen('about')">
-
-💜 About KDS
-
-</button>
-
-<button onclick="showScreen('feedback')">
-
-⭐ Feedback
-
-</button>
-  
-<!-- VOCAL SCREEN -->
-
-<div id="vocal" class="screen">
-
-<h1>🎵 Vocal Studio</h1>
-
-<h2>AI Vocal Coach</h2>
-
-<p>
-Today's Mission:
-<br><br>
-🎤 15 Minutes Breathing
-<br>
-🎵 20 Minutes Singing
-<br>
-🎧 Pitch Practice
-</p>
-
-<button onclick="showScreen('dashboard')">
-⬅ Dashboard
-</button>
-
-</div>
-
-<!-- DANCE SCREEN -->
-
-<div id="dance" class="screen">
-
-<h1>💃 Dance Studio</h1>
-
-<h2>AI Dance Coach</h2>
-
-<p>
-
-Today's Mission
-
-<br><br>
-
-🕺 Warm Up
-
-<br>
-
-💃 Learn Choreography
-
-<br>
-
-🔥 Freestyle Practice
-
-</p>
-
-<button onclick="showScreen('dashboard')">
-
-⬅ Dashboard
-
-</button>
-
-</div>
-
-<!-- RAP SCREEN -->
-
-<div id="rap" class="screen">
-
-<h1>🎤 Rap Studio</h1>
-
-<h2>AI Rap Coach</h2>
-
-<p>
-
-Today's Mission
-
-<br><br>
-
-🎙 Pronunciation
-
-<br>
-
-⚡ Speed Practice
-
-<br>
-
-🎵 Rhythm Training
-
-</p>
-
-<button onclick="showScreen('dashboard')">
-
-⬅ Dashboard
-
-</button>
-
-</div>
-
-<!-- KOREAN SCREEN -->
-
-<div id="korean" class="screen">
-
-<h1>🇰🇷 Korean Studio</h1>
-
-<h2>AI Korean Coach</h2>
-
-<p>
-
-Today's Lesson
-
-<br><br>
-
-안녕하세요
-
-<br>
-
-감사합니다
-
-<br>
-
-Practice Reading & Speaking
-
-</p>
-
-<button onclick="showScreen('dashboard')">
-
-⬅ Dashboard
-
-</button>
-
-</div>
-
-<!-- ABOUT -->
-
-<div id="about" class="screen">
-
-<h1>💜 About KDS</h1>
-
-<p>
-
-K-POP'S DREAM STAGE (KDS)
-
-is an AI-powered platform created to help aspiring K-pop trainees improve their skills in singing, dancing, rap, Korean, confidence and stage presence through personalized practice.
-
-</p>
-
-<button onclick="showScreen('dashboard')">
-
-⬅ Dashboard
-
-</button>
-
-</div>
-
-<!-- FEEDBACK -->
-
-<div id="feedback" class="screen">
-
-<h1>⭐ Feedback</h1>
-
-<select>
-
-<option>⭐⭐⭐⭐⭐ Excellent</option>
-
-<option>⭐⭐⭐⭐ Good</option>
-
-<option>⭐⭐⭐ Average</option>
-
-<option>⭐⭐ Needs Improvement</option>
-
-<option>⭐ Poor</option>
-
-</select>
-
-<textarea
-placeholder="Write your feedback here...">
-</textarea>
-
-<input
-type="email"
-placeholder="Email (Optional)">
-
-<button>
-
-📨 Send Feedback
-
-</button>
-
-<button
-class="secondary"
-onclick="showScreen('dashboard')">
-
-⬅ Dashboard
-
-</button>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-background:linear-gradient(rgba(0,0,0,.5),rgba(40,0,70,.7)),
-url("kds-background.png");
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-color:white;
-min-height:100vh;
-}
-
-.screen{
-display:none;
-width:90%;
-max-width:600px;
-margin:40px auto;
-padding:35px;
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(12px);
-border-radius:25px;
-box-shadow:0 0 25px rgba(173,72,255,.5);
-}
-
-.active{
-display:block;
-}
-
-h1{
-text-align:center;
-font-size:38px;
-margin-bottom:10px;
-}
-
-h2{
-text-align:center;
-color:#d28cff;
-margin-bottom:20px;
-}
-
-h3{
-margin-top:10px;
-}
-
-p{
-text-align:center;
-line-height:1.7;
-margin-bottom:20px;
-color:#eee;
-}
-
-input,
-select,
-textarea{
-width:100%;
-padding:14px;
-margin:12px 0;
-border:none;
-border-radius:12px;
-font-size:16px;
-background:rgba(255,255,255,.15);
-color:white;
-outline:none;
-}
-
-input::placeholder,
-textarea::placeholder{
-color:#ddd;
-}
-
-button{
-width:100%;
-padding:15px;
-margin-top:12px;
-border:none;
-border-radius:12px;
-font-size:17px;
-cursor:pointer;
-background:#9d00ff;
-color:white;
-transition:.3s;
-}
-
-button:hover{
-background:#c43dff;
-transform:scale(1.03);
-}
-
-.secondary{
-background:#666;
-}
-
-.secondary:hover{
-background:#888;
-}
-
-.coach-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-margin-top:25px;
-}
-
-.coach-card{
-background:rgba(255,255,255,.1);
-padding:25px;
-border-radius:20px;
-text-align:center;
-cursor:pointer;
-transition:.3s;
-}
-
-.coach-card:hover{
-transform:translateY(-6px);
-border:2px solid #c43dff;
-}
-
-.footer{
-margin-top:25px;
-text-align:center;
-font-size:14px;
-color:#ddd;
-}
-
-textarea{
-resize:none;
-height:120px;
-}
-
-@media(max-width:700px){
-
-.screen{
-width:95%;
-padding:25px;
-}
-
-h1{
-font-size:30px;
-}
-
-.coach-grid{
-grid-template-columns:1fr;
-}
-
-}
-function showScreen(screenId){
-
-// Hide all screens
-const screens=document.querySelectorAll(".screen");
-
-screens.forEach(screen=>{
-screen.classList.remove("active");
-});
-
-// Show selected screen
-document.getElementById(screenId).classList.add("active");
-
-// Scroll to top
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-// Feedback Button
-document.addEventListener("DOMContentLoaded",()=>{
-
-const feedbackButtons=document.querySelectorAll("#feedback button");
-
-if(feedbackButtons.length>0){
-
-feedbackButtons[0].addEventListener("click",()=>{
-
-alert("💜 Thank you for your feedback! Your opinion helps KDS improve.");
-
-});
-
-}
-
-});
-
-// Welcome Message
-document.addEventListener("DOMContentLoaded",()=>{
-
-console.log("Welcome to K-POP'S DREAM STAGE!");
-
-});
-
-// Future AI Placeholder
-function startAITraining(){
-
-alert(
-"🤖 AI Coach is under development.\n\nSoon you'll receive personalized K-pop training!"
-);
-
-}
-
-// Daily Streak Demo
-let streak=1;
-
-function increaseStreak(){
-
-streak++;
-
-alert("🔥 Practice Streak: "+streak+" days!");
-
-}
-
-// Simple Loading Animation
-window.onload=()=>{
-
-document.body.style.opacity="0";
-
-setTimeout(()=>{
-
-document.body.style.transition="1s";
-
-document.body.style.opacity="1";
-
-},100);
-
-};
-
-</div>
-<script src="script.js"></script>
-</body>
-</html>
