@@ -6,18 +6,18 @@
     <title>K-POP'S DREAM STAGE (KDS)</title>
     <style>
         /* ============================================================================
-           KDS DESIGN THEME WITH BABYMONSTER BACKGROUND LAYER
+           KDS GLOBAL DESIGN SYSTEM WITH SOLID GLASSMORPHISM HIGHLIGHTS
            ============================================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
         }
 
         body {
-            /* This puts a clean purple tint over your BabyMonster photo so text stays readable */
-            background: linear-gradient(rgba(0,0,0,.55), rgba(30,0,50,.75)),
+            /* Clean transparent dark overlay ensures text remains hyper-readable on all screen sizes */
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(35, 0, 60, 0.8)),
                         url("https://nme.com");
             background-size: cover;
             background-position: center;
@@ -25,6 +25,7 @@
             background-attachment: fixed;
             min-height: 100vh;
             color: white;
+            overflow-x: hidden;
         }
 
         .screen {
@@ -33,11 +34,11 @@
             max-width: 500px;
             margin: 40px auto;
             background: rgba(255, 255, 255, .08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-radius: 20px;
             padding: 35px;
-            box-shadow: 0 0 25px rgba(161, 0, 255, .4);
+            box-shadow: 0 0 30px rgba(161, 0, 255, .35);
         }
 
         .screen.active {
@@ -48,12 +49,15 @@
             text-align: center;
             font-size: 34px;
             margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(161, 0, 255, 0.5);
         }
 
         h2 {
             text-align: center;
             color: #d28cff;
             margin-bottom: 20px;
+            font-size: 20px;
         }
 
         p {
@@ -65,23 +69,29 @@
 
         input, select, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             margin: 10px 0;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             background: rgba(255, 255, 255, .15);
             color: white;
             font-size: 16px;
             outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            background: rgba(255, 255, 255, .25);
+            box-shadow: 0 0 10px rgba(210, 140, 255, .5);
         }
 
         option {
-            background: #1e003a;
+            background: #1a0035;
             color: white;
         }
 
         textarea {
-            resize: vertical;
+            resize: none;
             height: 100px;
         }
 
@@ -94,22 +104,27 @@
             background: #9d00ff;
             color: white;
             font-size: 17px;
-            cursor: pointer;
-            transition: .3s;
             font-weight: bold;
+            cursor: pointer;
+            transition: all .3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(157, 0, 255, 0.4);
         }
 
         button:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             background: #c43dff;
+            box-shadow: 0 6px 20px rgba(196, 61, 255, 0.6);
         }
 
         .secondary {
-            background: #555;
+            background: #444;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .secondary:hover {
-            background: #777;
+            background: #666;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
         }
 
         .coach-grid {
@@ -122,23 +137,26 @@
         .coach-card {
             background: rgba(255, 255, 255, .08);
             border-radius: 15px;
-            padding: 18px;
+            padding: 22px 15px;
             text-align: center;
             cursor: pointer;
-            transition: .3s;
-            font-size: 24px;
+            transition: all .3s ease;
+            font-size: 26px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .coach-card h3 {
             font-size: 16px;
             margin-top: 8px;
             color: white;
+            font-weight: 600;
         }
 
         .coach-card:hover {
             transform: translateY(-5px);
             border: 1px solid #d28cff;
             background: rgba(255, 255, 255, .15);
+            box-shadow: 0 5px 15px rgba(210, 140, 255, 0.2);
         }
 
         .footer {
@@ -146,21 +164,26 @@
             text-align: center;
             font-size: 13px;
             color: #ccc;
+            letter-spacing: 1px;
         }
 
+        /* Interactive AI Session Status Container */
         .session-monitor {
-            margin: 15px 0;
-            padding: 12px;
-            background: rgba(0, 0, 0, .55);
-            border-radius: 10px;
+            margin: 18px 0;
+            padding: 14px;
+            background: rgba(0, 0, 0, .6);
+            border-radius: 12px;
             font-weight: bold;
             font-family: monospace;
             text-align: center;
             border: 1px solid rgba(161, 0, 255, .4);
+            box-shadow: inset 0 0 10px rgba(161, 0, 255, 0.3);
+            font-size: 14px;
+            line-height: 1.4;
         }
 
         @media(max-width:600px){
-            .screen { width: 95%; padding: 25px; }
+            .screen { width: 95%; padding: 25px 20px; }
             h1 { font-size: 28px; }
             .coach-grid { grid-template-columns: 1fr; }
         }
@@ -175,16 +198,16 @@
         <p>Become the best version of yourself with your own AI Idol Coach.</p>
         <button onclick="showScreen('login')">🚀 Get Started</button>
         <button class="secondary" onclick="showScreen('login')">🔑 Login</button>
-        <div class="footer">Dream • Practice • Shine</div>
+        <div class="footer">DREAM • PRACTICE • SHINE</div>
     </div>
 
     <!-- LOGIN SCREEN -->
     <div id="login" class="screen">
         <h1>🔑 Login</h1>
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Password">
+        <input type="email" placeholder="Email" value="trainee@kds.com">
+        <input type="password" placeholder="Password" value="password123">
         <button onclick="showScreen('signup')">Create Account</button>
-        <button class="secondary" onclick="saveProfileAndContinue()">Login</button>
+        <button class="secondary" onclick="showScreen('profile')">Login</button>
         <button class="secondary" onclick="showScreen('home')">⬅ Back</button>
     </div>
 
@@ -199,11 +222,11 @@
         <button class="secondary" onclick="showScreen('login')">⬅ Back</button>
     </div>
 
-    <!-- TRAINEE SETUP CONFIGURATION -->
+    <!-- TRAINEE SETUP MANAGEMENT PANEL -->
     <div id="profile" class="screen">
         <h1>👤 Trainee Profile</h1>
-        <input type="text" id="stageNameInput" placeholder="Stage Name">
-        <input type="number" id="ageInput" placeholder="Age">
+        <input type="text" id="stageNameInput" placeholder="Stage Name (e.g. Chiquita)">
+        <input type="number" id="ageInput" placeholder="Age (e.g. 13)">
         
         <select>
             <option>Girl</option>
@@ -240,7 +263,7 @@
         <button onclick="saveProfileAndContinue()">Continue to Dashboard</button>
     </div>
 
-    <!-- CENTRAL OPERATION DASHBOARD -->
+    <!-- CENTRAL MONITOR CORE DASHBOARD -->
     <div id="dashboard" class="screen">
         <h1>🏠 Dashboard</h1>
         <p id="welcomeUserText">Welcome Trainee!</p>
@@ -257,12 +280,12 @@
         <button class="secondary" onclick="showScreen('home')">🚪 Logout</button>
     </div>
       
-    <!-- WORKSPACE PANEL TRAINING CORE MODULES -->
+    <!-- AI WORKING TRAINING RUNTIMES -->
     <div id="vocal" class="screen">
         <h1>🎵 Vocal Studio</h1>
         <h2>AI Vocal Coach</h2>
         <p>🎤 15 Minutes Breathing<br>🎵 20 Minutes Singing<br>🎧 Pitch Practice</p>
-        <button onclick="triggerStudioSession('vocal')">🎙 Run Vocal Assessment</button>
+        <button onclick="triggerStudioSession('vocal')">🎙 Start AI Vocal Scan</button>
         <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
     </div>
 
@@ -270,34 +293,9 @@
         <h1>💃 Dance Studio</h1>
         <h2>AI Dance Coach</h2>
         <p>🕺 Warm Up<br>💃 Learn Choreography<br>🔥 Freestyle Practice</p>
-        <button onclick="triggerStudioSession('dance')">👟 Active Motion Check</button>
+        <button onclick="triggerStudioSession('dance')">👟 Initialize Dance AI</button>
         <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
     </div>
 
     <div id="rap" class="screen">
         <h1>🎤 Rap Studio</h1>
-        <h2>AI Rap Coach</h2>
-        <p>🎙 Pronunciation<br>⚡ Speed Practice<br>🎵 Rhythm Training</p>
-        <button onclick="triggerStudioSession('rap')">⚡ Measure Flow Cadence</button>
-        <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
-    </div>
-
-    <div id="korean" class="screen">
-        <h1>🇰🇷 Korean Studio</h1>
-        <h2>AI Korean Coach</h2>
-        <p>안녕하세요 (Hello)<br>감사합니다 (Thank You)<br><br>Practice Reading & Speaking</p>
-        <button onclick="triggerStudioSession('korean')">🗣 Evaluate Accent Track</button>
-        <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
-    </div>
-
-    <!-- FEEDBACK AND SYSTEM OVERLAY PANELS -->
-    <div id="about" class="screen">
-        <h1>💜 About KDS</h1>
-        <p>K-POP'S DREAM STAGE (KDS) is an AI-powered platform created to help aspiring K-pop trainees improve their skills through personalized schedules.</p>
-        <button onclick="showScreen('dashboard')">⬅ Dashboard</button>
-    </div>
-
-    <div id="feedback" class="screen">
-        <h1>⭐ Feedback</h1>
-
-
