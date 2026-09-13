@@ -6,7 +6,7 @@
     <title>K-POP'S DREAM STAGE (KDS)</title>
     <style>
         /* ============================================================================
-           KDS DESIGN THEME (ALL YOUR BEAUTIFUL STYLES)
+           KDS DESIGN THEME WITH BABYMONSTER BACKGROUND LAYER
            ============================================================================ */
         * {
             margin: 0;
@@ -16,7 +16,8 @@
         }
 
         body {
-            background: linear-gradient(rgba(0,0,0,.45),rgba(20,0,40,.65)),
+            /* This puts a clean purple tint over your BabyMonster photo so text stays readable */
+            background: linear-gradient(rgba(0,0,0,.55), rgba(30,0,50,.75)),
                         url("https://nme.com");
             background-size: cover;
             background-position: center;
@@ -74,7 +75,6 @@
             outline: none;
         }
 
-        /* Keeps dropdown options matching your dark purple theme */
         option {
             background: #1e003a;
             color: white;
@@ -148,7 +148,6 @@
             color: #ccc;
         }
 
-        /* Glowing interactive AI assessment block */
         .session-monitor {
             margin: 15px 0;
             padding: 12px;
@@ -200,7 +199,7 @@
         <button class="secondary" onclick="showScreen('login')">⬅ Back</button>
     </div>
 
-    <!-- PROFILE PANEL SCREEN -->
+    <!-- TRAINEE SETUP CONFIGURATION -->
     <div id="profile" class="screen">
         <h1>👤 Trainee Profile</h1>
         <input type="text" id="stageNameInput" placeholder="Stage Name">
@@ -241,7 +240,7 @@
         <button onclick="saveProfileAndContinue()">Continue to Dashboard</button>
     </div>
 
-    <!-- MAIN IDOL DASHBOARD SCREEN -->
+    <!-- CENTRAL OPERATION DASHBOARD -->
     <div id="dashboard" class="screen">
         <h1>🏠 Dashboard</h1>
         <p id="welcomeUserText">Welcome Trainee!</p>
@@ -258,7 +257,7 @@
         <button class="secondary" onclick="showScreen('home')">🚪 Logout</button>
     </div>
       
-    <!-- INDIVIDUAL TRAINING SCREENS -->
+    <!-- WORKSPACE PANEL TRAINING CORE MODULES -->
     <div id="vocal" class="screen">
         <h1>🎵 Vocal Studio</h1>
         <h2>AI Vocal Coach</h2>
@@ -291,7 +290,7 @@
         <button class="secondary" onclick="showScreen('dashboard')">⬅ Dashboard</button>
     </div>
 
-    <!-- PLATFORM SUPPORT SCREENS -->
+    <!-- FEEDBACK AND SYSTEM OVERLAY PANELS -->
     <div id="about" class="screen">
         <h1>💜 About KDS</h1>
         <p>K-POP'S DREAM STAGE (KDS) is an AI-powered platform created to help aspiring K-pop trainees improve their skills through personalized schedules.</p>
@@ -300,8 +299,5 @@
 
     <div id="feedback" class="screen">
         <h1>⭐ Feedback</h1>
-        <select id="ratingSelect">
-            <option>⭐⭐⭐⭐⭐ Excellent</option>
-            <option>⭐⭐⭐⭐ Good</option>
-        </select>
+
 
